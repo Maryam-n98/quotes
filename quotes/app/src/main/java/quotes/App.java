@@ -4,48 +4,53 @@
 package quotes;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
 public class App {
-
     public String getGreeting() {
         return "Hello World!";
     }
-
     public static void main(String[] args) throws IOException {
-        String url = "http://ron-swanson-quotes.herokuapp.com/v2/quotes";
-        HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
-       connection.setConnectTimeout(5000);
-       connection.setReadTimeout(5000);
-           connection.setRequestMethod("GET");
-        int responseCode = connection.getResponseCode();
-        if (responseCode == HttpURLConnection.HTTP_OK) {
+
+        Gson gson = new Gson();
+
+        BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\Lenovo\\OneDrive\\Desktop\\java\\quotes\\quotes\\app\\src\\main\\java\\quotes\\recentquotes.json"));
+        List<Quotes> quote = gson.fromJson(reader, new TypeToken<List<Quotes>>() {}.getType());
+        reader.close();
+
+        int min = 0;
+        int max = quote.size()-1 ;
+
+        try{
+            URL url = new URL("http://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.connect();
             InputStreamReader inputStreamReader = new InputStreamReader(connection.getInputStream());
+
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            String data = bufferedReader.readLine();
-            System.out.println(data);
+
+
+            BufferedWriter add = new BufferedWriter(new FileWriter("C:\\Users\\Lenovo\\OneDrive\\Desktop\\java\\quotes\\quotes\\app\\src\\main\\java\\quotes\\recentquotes.json" , false));
+            ApiQuotes api = gson.fromJson(bufferedReader,ApiQuotes.class);
+            Quotes addQuote = new Quotes(null, api.getAuthor(), null,api.getText());
+            quote.add(addQuote);
+            gson = gson.newBuilder().setPrettyPrinting().create();
+
+
+            System.out.println("Quote from API: "+addQuote);
+            add.write(gson.toJson(quote));
+            add.close();
+
             bufferedReader.close();
-            Gson gson = new Gson();
-            String quotes = gson.toJson("http://ron-swanson-quotes.herokuapp.com/v2/quotes");
-            System.out.println(quotes);
 
-        }else {
-
-            Gson gson = new Gson();
-            int min =0;
-            int max = 137;
-            BufferedReader reader = new BufferedReader(new FileReader("./app/src/main/java/quotes/recentquotes.json"));
-            List<Quotes> quotes = gson.fromJson(reader, new TypeToken<List<Quotes>>() {}.getType());
-            System.out.println(quotes.get((int) (Math.random()*(max-min+1)+min)).toString());
-
+        }catch (Exception e){
+            System.out.println(quote.get((int) (Math.random()*(max- min+1)+ min)).toString());
         }
 
     }
-
 }

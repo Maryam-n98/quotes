@@ -26,7 +26,7 @@ public class Quotes {
     @Override
     public String toString() {
         return "Quotes{" +
-                "author='" + author + '\'' +
+                "authorkkkkkk='" + author + '\'' +
                 ", text='" + text + '\'' +
                 '}';
     }
