@@ -13,14 +13,16 @@ import java.net.URL;
 import java.util.List;
 
 public class App {
+
     public String getGreeting() {
         return "Hello World!";
     }
+
     public static void main(String[] args) throws IOException {
         String url = "http://ron-swanson-quotes.herokuapp.com/v2/quotes";
         HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
-//        connection.setConnectTimeout(5000);
-//        connection.setReadTimeout(5000);
+       connection.setConnectTimeout(5000);
+       connection.setReadTimeout(5000);
            connection.setRequestMethod("GET");
         int responseCode = connection.getResponseCode();
         if (responseCode == HttpURLConnection.HTTP_OK) {
@@ -32,13 +34,18 @@ public class App {
             Gson gson = new Gson();
             String quotes = gson.toJson("http://ron-swanson-quotes.herokuapp.com/v2/quotes");
             System.out.println(quotes);
+
         }else {
+
             Gson gson = new Gson();
             int min =0;
             int max = 137;
             BufferedReader reader = new BufferedReader(new FileReader("./app/src/main/java/quotes/recentquotes.json"));
             List<Quotes> quotes = gson.fromJson(reader, new TypeToken<List<Quotes>>() {}.getType());
             System.out.println(quotes.get((int) (Math.random()*(max-min+1)+min)).toString());
+
         }
+
     }
+
 }
