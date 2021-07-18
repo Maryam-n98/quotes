@@ -5,28 +5,51 @@ public class Quotes {
     private String author;
     private String likes;
     private String text;
-    public Quotes(String [] tags, String author, String likes, String text) {
+
+    public Quotes(String[] tags, String author, String likes, String text) {
         this.tags = tags;
         this.author = author;
         this.likes = likes;
         this.text = text;
     }
+
     public String[] getTags() {
         return tags;
     }
-    public String getAuthor() {
+
+    public void setTags(String[] tags) {
+        this.tags = tags;
+    }
+
+    public String getAuthor1() {
         return author;
     }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
     public String getLikes() {
         return likes;
     }
-    public String getText() {
+
+    public void setLikes(String likes) {
+        this.likes = likes;
+    }
+
+    public String getText1() {
         return text;
     }
+
+    public void setText(String text) {
+        this.text = text;
+
+    }
+
     @Override
     public String toString() {
-        return "Quotes{" +
-                "authorkkkkkk='" + author + '\'' +
+        return "Quotes {" +
+                "author='" + author + '\'' +
                 ", text='" + text + '\'' +
                 '}';
     }

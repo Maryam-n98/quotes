@@ -2,27 +2,31 @@ package quotes;
 
 
 public class ApiQuotes {
-    private String text;
-    private String Author;
+private final String author;
+private final String text;
 
-    public ApiQuotes(String text, String author) {
+
+    public ApiQuotes(String author, String text) {
+        this.author = author;
         this.text = text;
-        Author = author;
+
+    }
+
+
+
+    public String getAuthor() {
+        return author;
     }
 
     public String getText() {
         return text;
     }
 
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public String getAuthor() {
-        return Author;
-    }
-
-    public void setAuthor(String author) {
-        Author = author;
+    @Override
+    public String toString() {
+        return "ApiQuotes{" +
+                "author='" + author + '\'' +
+                ", text='" + text + '\'' +
+                '}';
     }
 }

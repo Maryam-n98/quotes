@@ -12,22 +12,22 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
+
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class AppTest {
-    @Test public void appHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull("app should have a greeting", classUnderTest.getGreeting());
-    }
+
     @Test
     public void contructorQuote (){
         Quotes quote = new Quotes(null,"Author","likes","text");
         Assertions.assertEquals(null, quote.getTags());
-       Assertions.assertEquals("Author", quote.getAuthor());
+       Assertions.assertEquals("Author", quote.getAuthor1());
         Assertions.assertEquals("likes", quote.getLikes());
-        Assertions.assertEquals("text", quote.getText());
+        Assertions.assertEquals("text", quote.getText1());
     }
 
     @Test
@@ -45,9 +45,15 @@ public class AppTest {
         Quotes quote = quotes.get((int) (Math.random()*(max-min+1)+min));
         int index = 0;
         for (int i = 0; i < quotes.size() ; i++) {
-            if(quotes.get(i).getText().equals(quote.getText())){
+            if(quotes.get(i).getText1().equals(quote.getText1())){
                 index = i;
             }
         }
         Assertions.assertTrue(index >= 0 && index < 138 , "return true if got a random quote from the json file ");    }
+    @Test
+    public void testAPI() throws IOException {
+        URL url = new URL("http://ron-swanson-quotes.herokuapp.com/v2/quotes");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        Assertions.assertEquals(200, connection.getResponseCode(), String.valueOf(true));
+    }
 }
