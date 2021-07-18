@@ -30,8 +30,7 @@ public class App {
             BufferedReader bufferedReader = new BufferedReader(input);
             BufferedWriter add = new BufferedWriter(new FileWriter("C:\\Users\\Lenovo\\OneDrive\\Desktop\\java\\quotes\\quotes\\app\\src\\main\\java\\quotes\\recentquotes.json" , false));
             ApiQuotes Api = gson.fromJson(bufferedReader, ApiQuotes.class);
-            Quotes getQuote = new Quotes(null, Api.getAuthor(), null , Api.getText());
-            System.out.println("From Api  "+getQuote);
+            Quotes getQuote = new Quotes(null, Api.getQuoteAuthor(), null , Api.getQuoteText());            System.out.println("From Api  "+getQuote);
             quotes.add(getQuote);
             gson = gson.newBuilder().setPrettyPrinting().create();
             add.write(gson.toJson(quotes));

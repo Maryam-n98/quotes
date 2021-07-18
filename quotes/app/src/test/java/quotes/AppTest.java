@@ -25,9 +25,9 @@ public class AppTest {
     public void contructorQuote (){
         Quotes quote = new Quotes(null,"Author","likes","text");
         Assertions.assertEquals(null, quote.getTags());
-       Assertions.assertEquals("Author", quote.getAuthor1());
+       Assertions.assertEquals("Author", quote.getAuthor());
         Assertions.assertEquals("likes", quote.getLikes());
-        Assertions.assertEquals("text", quote.getText1());
+        Assertions.assertEquals("text", quote.getText());
     }
 
     @Test
@@ -45,7 +45,7 @@ public class AppTest {
         Quotes quote = quotes.get((int) (Math.random()*(max-min+1)+min));
         int index = 0;
         for (int i = 0; i < quotes.size() ; i++) {
-            if(quotes.get(i).getText1().equals(quote.getText1())){
+            if(quotes.get(i).getText().equals(quote.getText())){
                 index = i;
             }
         }
