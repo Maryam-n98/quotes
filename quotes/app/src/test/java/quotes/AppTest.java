@@ -12,15 +12,15 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
+
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class AppTest {
-    @Test public void appHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull("app should have a greeting", classUnderTest.getGreeting());
-    }
+
     @Test
     public void contructorQuote (){
         Quotes quote = new Quotes(null,"Author","likes","text");
@@ -50,4 +50,10 @@ public class AppTest {
             }
         }
         Assertions.assertTrue(index >= 0 && index < 138 , "return true if got a random quote from the json file ");    }
+    @Test
+    public void testAPI() throws IOException {
+        URL url = new URL("http://ron-swanson-quotes.herokuapp.com/v2/quotes");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        Assertions.assertEquals(200, connection.getResponseCode(), String.valueOf(true));
+    }
 }

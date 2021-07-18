@@ -1,23 +1,24 @@
 package quotes;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class ApiQuotes {
-    List<String> text= new ArrayList<String>();
-
-    public ApiQuotes(List<String> text) {
-        this.text = text;
+    private String quoteText;
+    private String quoteAuthor;
+    public ApiQuotes(String quoteText, String quoteAuthor) {
+        this.quoteText = quoteText;
+        this.quoteAuthor = quoteAuthor;
     }
-
-    public List<String> getText() {
-        return text;
+    public String getQuoteText() {
+        return quoteText;
     }
-
+    public String getQuoteAuthor() {
+        return quoteAuthor;
+    }
     @Override
     public String toString() {
         return "ApiQuotes{" +
-                "text=" + text +
+                "quoteText='" + quoteText + '\'' +
+                ", quoteAuthor='" + quoteAuthor + '\'' +
                 '}';
     }
-}
+    }
